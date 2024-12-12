@@ -1,33 +1,28 @@
 const express = require('express');
-const Request = require('../models/Request.model');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
 const router = express.Router();
 
-// Get All Requests
-router.get('/', async (req, res) => {
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+
+  if (!token) return res.status(403).json({ message: 'No token provided' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).json({ message: 'Unauthorized' });
+
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+router.get('/profile', verifyToken, async (req, res) => {
   try {
-    const requests = await Request.find().populate('createdBy', 'name');
-    res.json(requests);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-// Create New Request
-router.post('/', async (req, res) => {
-  const { item, pickupAddress, dropoffAddress, rewardPoints, userId } = req.body;
-
-  try {
-    const newRequest = new Request({
-      item,
-      pickupAddress,
-      dropoffAddress,
-      rewardPoints,
-      createdBy: userId,
-    });
-
-    await newRequest.save();
-    res.status(201).json({ message: 'Request created successfully' });
+    const { name, email, rewardPoints, completedDeliveries } = user;
+    res.json({ name, email, rewardPoints, completedDeliveries });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }

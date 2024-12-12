@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddRequestScreen = ({ navigation }) => {
   const [item, setItem] = useState('');
@@ -12,7 +13,7 @@ const AddRequestScreen = ({ navigation }) => {
 
   const handleAddRequest = async () => {
     try {
-      const userId = '123456'; 
+      const userId = await AsyncStorage.getItem('userId'); 
       const response = await axios.post('https://vitamesh-assignment.onrender.com/api/requests', {
         item,
         pickupAddress,
@@ -24,7 +25,6 @@ const AddRequestScreen = ({ navigation }) => {
       setError('');
       console.log('Request added:', response.data);
 
-      // Reset form
       setItem('');
       setPickupAddress('');
       setDropoffAddress('');

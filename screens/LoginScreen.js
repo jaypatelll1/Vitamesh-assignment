@@ -12,10 +12,12 @@ const LoginScreen = ({ navigation }) => {
       const response = await axios.post('https://vitamesh-assignment.onrender.com/api/auth/login', { email, password });
       console.log('Login successful:', response.data);
   
-      const { token } = response.data;
+      const { token } = response.data.token;
+      const { userId } = response.data.userId;
+  
   
       await AsyncStorage.setItem('token', token);
-      await AsyncStorage.setItem('userId', response.data.userId);
+      await AsyncStorage.setItem('userId', userId);
   
       navigation.reset({
         index: 0,
