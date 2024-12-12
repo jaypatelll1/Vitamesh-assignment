@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5002/api/auth/login', { email, password });
+      const response = await axios.post('https://vitamesh-assignment.onrender.com/api/auth/login', { email, password });
       console.log('Login successful:', response.data);
-
-      navigation.navigate('Dashboard');
+  
+      const { token } = response.data;
+  
+      await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('userId', response.data.userId);
+  
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Dashboard' }], 
+      });
     } catch (err) {
       setError('Invalid email or password');
       console.error('Login error:', err.response?.data || err.message);
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome Back</Text>

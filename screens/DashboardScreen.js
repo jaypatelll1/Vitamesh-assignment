@@ -9,7 +9,7 @@ const DashboardScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get('http://localhost:5002/api/requests');
+        const response = await axios.get('https://vitamesh-assignment.onrender.com/api/requests');
         setRequests(response.data);
       } catch (err) {
         setError('Failed to load requests');
@@ -39,6 +39,11 @@ const DashboardScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
+
+      {/* Add Request Button */}
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddRequest')}>
+        <Text style={styles.addButtonText}>Add Request</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -57,6 +62,14 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 18, fontWeight: '700', color: '#4caf50' },
   cardSubtitle: { fontSize: 14, color: '#555', marginTop: 5 },
   errorText: { color: 'red', textAlign: 'center', marginTop: 10 },
+  addButton: {
+    backgroundColor: '#4caf50',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  addButtonText: { color: '#fff', fontSize: 18, fontWeight: '600' },
 });
 
 export default DashboardScreen;

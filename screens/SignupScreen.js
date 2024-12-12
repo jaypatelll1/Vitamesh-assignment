@@ -10,7 +10,7 @@ const SignupScreen = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post('http://localhost:5002/api/auth/register', { name, email, password });
+      const response = await axios.post('https://vitamesh-assignment.onrender.com/api/auth/register', { name, email, password });
       console.log('Signup successful:', response.data);
       navigation.navigate('Login');
     } catch (err) {
