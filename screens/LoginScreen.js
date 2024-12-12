@@ -11,14 +11,9 @@ const LoginScreen = ({ navigation }) => {
     try {
       const response = await axios.post('https://vitamesh-assignment.onrender.com/api/auth/login', { email, password });
       console.log('Login successful:', response.data);
-    
-      const { token, userId } = response.data; // Access token and userId correctly
-    
-      // Store token and userId in AsyncStorage
+      const { token, userId } = response.data;    
       await AsyncStorage.setItem('token', token);
       await AsyncStorage.setItem('userId', userId);
-    
-      // Reset the navigation stack to navigate to Dashboard
       navigation.reset({
         index: 0,
         routes: [{ name: 'Dashboard' }], 

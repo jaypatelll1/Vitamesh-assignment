@@ -19,13 +19,12 @@ const DashboardScreen = ({ navigation }) => {
     fetchRequests();
   }, []);
 
-  // Set the profile button in the header
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           style={styles.profileButton}
-          onPress={() => navigation.navigate('Profile')} // Navigate to Profile screen
+          onPress={() => navigation.navigate('Profile')} 
         >
           <Text style={styles.profileButtonText}>Profile</Text>
         </TouchableOpacity>
@@ -53,8 +52,6 @@ const DashboardScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
-
-      {/* Add Request Button */}
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddRequest')}>
         <Text style={styles.addButtonText}>Add Request</Text>
       </TouchableOpacity>
