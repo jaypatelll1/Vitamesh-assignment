@@ -12,12 +12,26 @@ const DashboardScreen = ({ navigation }) => {
         const response = await axios.get('https://vitamesh-assignment.onrender.com/api/requests');
         setRequests(response.data);
       } catch (err) {
-        setError('Failed to load requests');
+        setError('Failed to load requests'); 
         console.error('Dashboard fetch error:', err.response?.data || err.message);
       }
     };
     fetchRequests();
   }, []);
+
+  // Set the profile button in the header
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate('Profile')} // Navigate to Profile screen
+        >
+          <Text style={styles.profileButtonText}>Profile</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -70,6 +84,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   addButtonText: { color: '#fff', fontSize: 18, fontWeight: '600' },
+  profileButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  profileButtonText: {
+    fontSize: 16,
+    color: '#4caf50',
+  },
 });
 
 export default DashboardScreen;

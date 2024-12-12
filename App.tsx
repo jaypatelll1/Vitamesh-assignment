@@ -27,7 +27,7 @@ const App = () => {
 <Stack.Navigator>
   <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
   <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
-  <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
+  <Stack.Screen name="Dashboard" component={DashboardScreen} />
   <Stack.Screen name="RequestDetails" component={RequestDetailsScreen} options={{ headerShown: false }} />
   <Stack.Screen name="AddRequest" component={AddRequestScreen} options={{ headerShown: false }} />
   <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
