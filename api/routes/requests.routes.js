@@ -3,7 +3,6 @@ const Request = require('../models/Request.model');
 const User = require('../models/User.model');
 const router = express.Router();
 
-// Get All Requests
 router.get('/', async (req, res) => {
   try {
     const requests = await Request.find().populate('createdBy', 'name');
@@ -13,7 +12,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create New Request
 router.post('/', async (req, res) => {
   const { item, pickupAddress, dropoffAddress, rewardPoints, userId } = req.body;
 
